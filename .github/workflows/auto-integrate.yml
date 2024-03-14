@@ -1,4 +1,4 @@
-name: Lint (staging)
+name: Auto integrate Pull Request
 
 on:
   pull_request:
@@ -6,6 +6,8 @@ on:
 
 jobs:
   lint:
+    name: Lint project before approve
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -28,9 +30,6 @@ jobs:
 
       - name: Run Linter
         run: pnpm run lint
-
-      #- name: Run Tests
-      #  run: pnpm run test
   
   auto-approve-pr:
     needs: lint
@@ -77,3 +76,5 @@ jobs:
         uses: "pascalgn/automerge-action@v0.16.2"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_RETRY_SLEEP: 20000
+          MERGE_REQUIRED_APPROVALS: 1
