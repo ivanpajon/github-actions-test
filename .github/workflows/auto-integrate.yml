@@ -71,10 +71,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - id: automerge
-        name: automerge
-        uses: "pascalgn/automerge-action@v0.16.2"
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          MERGE_RETRY_SLEEP: 20000
-          MERGE_REQUIRED_APPROVALS: 1
+      - name: automerge
+        uses: ridedott/merge-me-action@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_METHOD: MERGE
