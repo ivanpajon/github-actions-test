@@ -3,7 +3,6 @@ name: Lint (staging)
 on:
   pull_request:
     branches: [ staging ]
-    types: [ opened, reopened ]
 
 jobs:
   lint:
@@ -32,3 +31,13 @@ jobs:
 
       #- name: Run Tests
       #  run: pnpm run test
+  
+  auto-approve-pr:
+    needs: lint
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: hmarr/auto-approve-action@v4
