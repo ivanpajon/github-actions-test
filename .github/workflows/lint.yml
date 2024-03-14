@@ -43,6 +43,8 @@ jobs:
       - uses: hmarr/auto-approve-action@v4
 
   auto-merge-pr:
+    needs: auto-approve-pr
+
     runs-on: ubuntu-latest
 
     steps:
