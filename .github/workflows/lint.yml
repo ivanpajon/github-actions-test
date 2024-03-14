@@ -35,15 +35,39 @@ jobs:
   auto-approve-pr:
     needs: lint
 
+    name: Auto approve Pull Request
+
     runs-on: ubuntu-latest
 
     permissions:
       pull-requests: write
+
     steps:
       - uses: hmarr/auto-approve-action@v4
 
-  auto-merge-pr:
+  auto-label-pr:
     needs: auto-approve-pr
+
+    name: Auto label Pull Request if approved
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write
+
+    steps:
+    - name: Auto-Label when approved
+      uses: koj-co/label-approved-action@master
+      with:
+        labels: "automerge"
+        approvals: 1
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+  auto-merge-pr:
+    needs: auto-label-pr
+
+    name: Auto merge Pull Request if labeled
 
     runs-on: ubuntu-latest
 
