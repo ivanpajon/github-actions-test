@@ -25,6 +25,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.1
+        with:
+          token: ${{ secrets.GH_PAT }}
 
       - uses: pnpm/action-setup@v3
         with:
@@ -45,7 +47,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: Cecilapp/GitHub-Pages-deploy@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         with:
           email: ivan@codemain.pro
           #build_dir: _site               # optional
