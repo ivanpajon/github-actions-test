@@ -20,6 +20,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.1
+        with:
+          token: ${{ secrets.GH_PAT }}
 
       - uses: pnpm/action-setup@v3
         with:
@@ -61,7 +63,7 @@ jobs:
           labels: "automerge"
           approvals: 1
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.GH_PAT }}"
 
   auto-merge-pr:
     needs: auto-label-pr
@@ -74,7 +76,7 @@ jobs:
       contents: write
 
     steps:
-      - name: automerge
+      - name: Auto-merge if labeled
         uses: "pascalgn/automerge-action@v0.15.6"
         env:
           GITHUB_TOKEN: "${{ secrets.GH_PAT }}"
