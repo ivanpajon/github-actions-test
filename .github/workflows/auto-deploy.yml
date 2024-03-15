@@ -2,9 +2,9 @@ name: Auto deploy
 run-name: Auto deploy
 
 on:
-  pull_request:
-    types:
-      - closed
+  pull_request_target:
+    branches: [ staging ]
+    types: [ closed ]
 
 jobs:
   build-and-deploy:
