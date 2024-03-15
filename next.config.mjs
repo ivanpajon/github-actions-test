@@ -4,6 +4,7 @@ const nextConfig = {
   distDir: 'dist',
   basePath: '/github-actions-test',
   assetPrefix: '/github-actions-test/',
+  trailingSlash: true,
   reactStrictMode: true,
   images: {
     unoptimized: true,
