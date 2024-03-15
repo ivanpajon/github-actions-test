@@ -20,6 +20,9 @@ jobs:
     strategy:
       matrix:
         node-version: [20]
+    
+    permissions:
+      pages: write
 
     steps:
       - uses: actions/checkout@v4.1.1
@@ -41,9 +44,9 @@ jobs:
         run: pnpm run build
 
       - name: Deploy to GitHub Pages
-        uses: Cecilapp/GitHub-Pages-deploy@v2
+        uses: Cecilapp/GitHub-Pages-deploy@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           email: ivan@codemain.pro
           build_dir: dist
