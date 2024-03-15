@@ -2,7 +2,7 @@ name: Auto deploy
 run-name: Auto deploy
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - closed
 
