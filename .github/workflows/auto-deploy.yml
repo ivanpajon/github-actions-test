@@ -2,14 +2,18 @@ name: Auto deploy
 run-name: Auto deploy
 
 on:
-  pull_request_target:
-    types:
-      - closed
+  pull_request:
+   types:
+     - closed
+  # push:
+  #   branches:
+  #     - staging
 
 jobs:
   build-and-deploy:
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     # if: contains(github.event.pull_request.labels.*.name, 'automerge')
+    # if: github.event.pull_request && github.event.pull_request.merged == true
 
     name: Build and deploy to GH Pages
 
@@ -20,7 +24,7 @@ jobs:
         node-version: [20]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.1.1
 
       - uses: pnpm/action-setup@v3
         with:
