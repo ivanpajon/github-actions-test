@@ -11,9 +11,7 @@ on:
 
 jobs:
   build-and-deploy:
-    if: github.event.pull_request.merged == true
-    # if: contains(github.event.pull_request.labels.*.name, 'automerge')
-    # if: github.event.pull_request && github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'automerge')
 
     name: Build and deploy to GH Pages
 
@@ -25,8 +23,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.1
-        with:
-          token: ${{ secrets.GH_PAT }}
 
       - uses: pnpm/action-setup@v3
         with:
@@ -47,11 +43,11 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: Cecilapp/GitHub-Pages-deploy@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           email: ivan@codemain.pro
-          #build_dir: _site               # optional
-          #branch: website                # optional
+          build_dir: dist
+          branch: staging
+          commit_message: Auto deploying to GitHub Pages!
           #cname: domain.tld              # optional
           #jekyll: no                     # optional
-          #commit_message: custom message # optional
