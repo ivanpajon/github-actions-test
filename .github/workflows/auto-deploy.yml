@@ -41,13 +41,11 @@ jobs:
         run: pnpm run build
 
       - name: Deploy to GitHub Pages
-        uses: Cecilapp/GitHub-Pages-deploy@v3
+        uses: Cecilapp/GitHub-Pages-deploy@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         with:
           email: ivan@codemain.pro
           build_dir: dist
           branch: staging
           commit_message: Auto deploying to GitHub Pages!
-          #cname: domain.tld              # optional
-          #jekyll: no                     # optional
