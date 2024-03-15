@@ -2,11 +2,14 @@ name: Auto deploy
 run-name: Auto deploy
 
 on:
-  push:
-    branches: [ staging ]
+  pull_request:
+    types:
+      - closed
 
 jobs:
   build-and-deploy:
+    if: github.event.pull_request.merged == true
+
     name: Build and deploy to GH Pages
 
     runs-on: ubuntu-latest
