@@ -1,10 +1,13 @@
+# Workflow for linting and integrate a Pull Request into Staging branch
 name: Auto integrate Pull Request
-run-name: Auto integrate Pull Request
+run-name: Automatically integrates Pull Requests into Staging branch (with checks and approvals)
 
+# Trigger on pull request events for the 'staging' branch
 on:
   pull_request:
     branches: [ staging ]
 
+# Grant write access to pull requests for necessary actions
 permissions:
   pull-requests: write
 
@@ -36,18 +39,22 @@ jobs:
 
       - name: Run Linter
         run: pnpm run lint
+        # Consider additional checks like run tests
   
   auto-approve-pr:
+    # Trigger this job after the 'lint' job successfully completes
     needs: lint
 
     name: Auto approve Pull Request
 
     runs-on: ubuntu-latest
 
+    # Auto approve
     steps:
       - uses: hmarr/auto-approve-action@v4
 
   auto-label-pr:
+    # Trigger this job after 'auto-approve-pr' successfully completes
     needs: auto-approve-pr
 
     name: Auto label Pull Request if approved
@@ -55,21 +62,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Auto-Label when approved
+      - name: Auto label when approved
         uses: koj-co/label-approved-action@master
         with:
+          # Label to trigger auto merge
           labels: "automerge"
+          # Require at least one approval
           approvals: 1
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
   auto-merge-pr:
+    # Trigger this job after 'auto-approve-pr' successfully completes
     needs: auto-label-pr
 
     name: Auto merge Pull Request if labeled
 
     runs-on: ubuntu-latest
 
+    # Grant write permissions to content for merging
     permissions:
       contents: write
 
@@ -77,4 +88,5 @@ jobs:
       - name: Auto-merge if labeled
         uses: "pascalgn/automerge-action@v0.15.6"
         env:
+          # Use Personal Access Token to merge
           GITHUB_TOKEN: "${{ secrets.GH_PAT }}"
