@@ -26,6 +26,8 @@ jobs:
     # Run only if the Pull Request was closed because of a merge and has the 'automerge' label
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'automerge')
 
+    name: Build and prepare for deployment
+
     env:
       NODE_VERSION: 20
 
@@ -60,6 +62,8 @@ jobs:
   deploy:
     # Trigger this job after the 'build' job successfully completes
     needs: build
+
+    name: Deploy to GitHub Pages
 
     environment:
       name: github-pages
