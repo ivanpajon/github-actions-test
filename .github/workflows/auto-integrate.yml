@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   lint:
-    # if: github.event.pull_request.user.login == 'ivanpajon2'
+    if: github.event.pull_request.user.login == 'ivanpajon'
 
     name: Lint project before approve
 
@@ -23,9 +23,6 @@ jobs:
       NODE_VERSION: 20
 
     steps:
-      - name: View PR author
-        run: echo "This PR is opened by ${{ github.event.pull_request.user.login }} ."
-
       - uses: actions/checkout@v4.1.1
 
       - uses: pnpm/action-setup@v3
