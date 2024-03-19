@@ -1,12 +1,11 @@
+const GITHUB_REPO_NAME = 'github-actions-test';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  distDir: 'dist',
-  basePath: '/github-actions-test',
-  assetPrefix: '/github-actions-test/',
+  basePath: `/${GITHUB_REPO_NAME}`,
+  assetPrefix: `/${GITHUB_REPO_NAME}/`,
   trailingSlash: true,
-  // skipTrailingSlashRedirect: true,
-  // reactStrictMode: true,
   images: {
     unoptimized: true,
   }
